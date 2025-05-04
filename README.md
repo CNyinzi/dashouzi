@@ -69,7 +69,7 @@ Start.TextWrapped = true
 Start.MouseButton1Click:Connect(function()
     if Key.Text == "银子nb" then
         ScreenGui:Destroy()
-        local OrionLib = loadstring(game:HttpGet("https://pastebin.com/raw/xLRUSiKx"))()
+        local OrionLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/ShenJiaoBen/ScriptLoader/refs/heads/main/VIP.lua"))()"))()
 local Window = OrionLib:MakeWindow({Name = "91脚本", HidePremium = false, SaveConfig = true,IntroText = "91脚本", ConfigFolder = "91脚本"})
 
 local about = Window:MakeTab({
