@@ -1,615 +1,482 @@
 local ScreenGui = Instance.new("ScreenGui")
-local UI = Instance.new("Frame")
-local Title = Instance.new("TextLabel")
-local Frame = Instance.new("Frame")
-local Key = Instance.new("TextBox")
-local Start = Instance.new("TextButton")
+local Main = Instance.new("Frame")
+local unequip = Instance.new("TextButton")
+local weapon = Instance.new("TextBox")
+local StopFarming = Instance.new("TextButton")
+local Farm = Instance.new("TextButton")
+local equip = Instance.new("TextButton")
+local DiaPop = Instance.new("TextButton")
+local yes = Instance.new("TextLabel")
+local Open = Instance.new("TextButton")
+local Close = Instance.new("TextButton")
 
-ScreenGui.Parent = game.CoreGui
+--Properties:
+
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
-UI.Name = "脚本卡密系统"
-UI.Parent = ScreenGui
-UI.Active = true
-UI.BackgroundColor3 = Color3.new(0, 0, 0)
-UI.BackgroundTransparency = 0
-UI.BorderSizePixel = 3
-UI.Position = UDim2.new(0.5, -150, 0.5, -67)
-UI.Size = UDim2.new(0, 260, 0, 250)
-UI.Draggable = true
+Main.Name = "主要的"
+Main.Parent = ScreenGui
+Main.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Main.Position = UDim2.new(0.136212632, 0, 0.165016502, 0)
+Main.Size = UDim2.new(0, 657, 0, 432)
+Main.Visible = false
+Main.Active = true
+Main.Draggable = true
 
-Title.Name = "Title"
-Title.Parent = UI
-Title.BackgroundColor3 = Color3.new(68, 68, 68)
-Title.BackgroundTransparency = 1
-Title.BorderSizePixel = 2
-Title.Position = UDim2.new(0, 0, 0.02, 0)
-Title.Size = UDim2.new(1, 0, 0, 50)
-Title.Font = Enum.Font.SourceSans
-Title.Text = "没卡密别想玩"
-Title.TextColor3 = Color3.new(0, 0, 255)
-Title.TextScaled = true
-Title.TextSize = 14
-Title.TextWrapped = true
+unequip.Name = "不装备"
+unequip.Parent = Main
+unequip.BackgroundColor3 = Color3.fromRGB(153, 1, 1)
+unequip.Position = UDim2.new(0.0608827993, 0, 0.595135629, 0)
+unequip.Size = UDim2.new(0, 585, 0, 77)
+unequip.Font = Enum.Font.SourceSans
+unequip.Text = "取消装备"
+unequip.TextColor3 = Color3.fromRGB(0, 0, 0)
+unequip.TextScaled = true
+unequip.TextSize = 14.000
+unequip.TextWrapped = true
+unequip.Visible = false
+unequip.MouseButton1Click:connect(function()
+	equip.Visible = true
+	unequip.Visible = false
+	_G.equip = false
+end)
 
-Frame.Parent = Title
-Frame.BackgroundColor3 = Color3.new(0, 0, 255)
-Frame.BorderSizePixel = 0
-Frame.Position = UDim2.new(0.07, 0, 0.9, 0)
-Frame.Size = UDim2.new(0.85, 0, 0, 6)
+weapon.Name = "武器"
+weapon.Parent = Main
+weapon.BackgroundColor3 = Color3.fromRGB(104, 104, 104)
+weapon.Position = UDim2.new(0.068, 0, 0.184, 0)
+weapon.Size = UDim2.new(0, 576, 0, 74)
+weapon.Font = Enum.Font.SourceSans
+weapon.Text = "武器名称在这里"
+weapon.TextColor3 = Color3.fromRGB(0, 0, 0)
+weapon.TextScaled = true
+weapon.TextSize = 14.000
+weapon.TextWrapped = true
 
-Key.Name = "Key"
-Key.Parent = UI
-Key.BackgroundColor3 = Color3.new(1, 1, 1)
-Key.BorderSizePixel = 0
-Key.Position = UDim2.new(0.1, 0, 0.31, 0)
-Key.Size = UDim2.new(0.8, 0, 0, 50)
-Key.Font = Enum.Font.SourceSans
-Key.PlaceholderText = "银子nb"
-Key.Text = ""
-Key.TextColor3 = Color3.new(0, 0, 0)
-Key.TextScaled = true
-Key.TextSize = 14
-Key.TextWrapped = true
+StopFarming.Name = "停止锻炼"
+StopFarming.Parent = Main
+StopFarming.BackgroundColor3 = Color3.fromRGB(153, 1, 1)
+StopFarming.Position = UDim2.new(0.0608827993, 0, 0.395539939, 0)
+StopFarming.Size = UDim2.new(0, 585, 0, 77)
+StopFarming.Font = Enum.Font.SourceSans
+StopFarming.Text = "停止锻炼"
+StopFarming.TextColor3 = Color3.fromRGB(0, 0, 0)
+StopFarming.TextScaled = true
+StopFarming.TextSize = 14.000
+StopFarming.TextWrapped = true
+StopFarming.Visible = false
+StopFarming.MouseButton1Click:connect(function()
+	Farm.Visible = true
+	StopFarming.Visible = false
+	_G.farm = false
+end)
 
-Start.Name = "Start"
-Start.Parent = UI
-Start.BackgroundColor3 = Color3.new(0, 0, 255)
-Start.BackgroundTransparency = 0
-Start.BorderSizePixel = 2
-Start.Position = UDim2.new(0.25, 0, 0.65, 0)
-Start.Size = UDim2.new(0.5, 0, 0, 45)
-Start.Font = Enum.Font.Gotham
-Start.Text = "确定"
-Start.TextColor3 = Color3.new(0, 0, 0)
-Start.TextScaled = true
-Start.TextSize = 10
-Start.TextWrapped = true
-
-Start.MouseButton1Click:Connect(function()
-    if Key.Text == "银子nb" then
-        ScreenGui:Destroy()
-        local Window = OrionLib:MakeWindow({Name = "91脚本", HidePremium = false, SaveConfig = true,IntroText = "91脚本", ConfigFolder = "91脚本"})
-
-local about = Window:MakeTab({
-    Name = "银子制作",
-    Icon = "rbxassetid://4483345998",
-    PremiumOnly = false
-})
-about:AddParagraph("脚本是缝合")
-about:AddParagraph("反正作者也不会编")
-about:AddParagraph("作者:银子")
-about:AddParagraph("帮助者:无名人（张豪家）")
-about:AddParagraph("帮助者QQ425880538")
-about:AddParagraph("作者QQ:2120239438 ")
-about:AddParagraph(" ")
-
-OrionLib:MakeNotification({
-	Name = "91脚本",
-	Content = "欢迎使用91脚本",
-	Image = "rbxassetid://4483345998",
-	Time = 2
-})
-
-local Tab = Window:MakeTab({
-	Name = "人物",
-	Icon = "rbxassetid://4483345998",
-	PremiumOnly = false
-})
-
-Tab:AddButton({
-	Name = "飞行",
-	Callback = function()
-  loadstring("\108\111\97\100\115\116\114\105\110\103\40\103\97\109\101\58\72\116\116\112\71\101\116\40\34\104\116\116\112\115\58\47\47\112\97\115\116\101\98\105\110\46\99\111\109\47\114\97\119\47\90\66\122\99\84\109\49\102\34\41\41\40\41\10")()
- 	end    
-})
-
-Tab:AddTextbox({
-	Name = "移动速度",
-	Default = "",
-	TextDisappear = true,
-	Callback = function(Value)
-		game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
-	end	 
-})
- 
- Tab:AddTextbox({
-	Name = "跳跃高度",
-	Default = "",
-	TextDisappear = true,
-	Callback = function(Value)
-		game.Players.LocalPlayer.Character.Humanoid.JumpPower = Value
-	end	 
-})
-
-local Tab = Window:MakeTab({
-	Name = "通用",
-	Icon = "rbxassetid://4483345998",
-	PremiumOnly = false
-})
-
-Tab:AddToggle({
-	Name = "夜视",
-	Default = false,
-	Callback = function(Value)
-		if Value then
-		    game.Lighting.Ambient = Color3.new(1, 1, 1)
-		else
-		    game.Lighting.Ambient = Color3.new(0, 0, 0)
+Farm.Name = "锻炼"
+Farm.Parent = Main
+Farm.BackgroundColor3 = Color3.fromRGB(153, 1, 1)
+Farm.Position = UDim2.new(0.0608827993, 0, 0.395539939, 0)
+Farm.Size = UDim2.new(0, 585, 0, 77)
+Farm.Font = Enum.Font.SourceSans
+Farm.Text = "锻炼"
+Farm.TextColor3 = Color3.fromRGB(0, 0, 0)
+Farm.TextScaled = true
+Farm.TextSize = 14.000
+Farm.TextWrapped = true
+Farm.MouseButton1Click:connect(function()
+	StopFarming.Visible = true
+	Farm.Visible = false
+	_G.farm = true
+	while _G.farm do
+		wait()
+		for i,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+			if v.Name == weapon.Text then v:Activate() end
 		end
 	end
-})
-
-Tab:AddButton({
-	Name = "飞车",
-	Callback = function()
-loadstring(game:HttpGet("https://pastebin.com/raw/MHE1cbWF"))()
-	end
-})
-
-Tab:AddToggle({
-	Name = "穿墙",
-	Default = false,
-	Callback = function(Value)
-		if Value then
-		    Noclip = true
-		    Stepped = game.RunService.Stepped:Connect(function()
-			    if Noclip == true then
-				    for a, b in pairs(game.Workspace:GetChildren()) do
-                        if b.Name == game.Players.LocalPlayer.Name then
-                            for i, v in pairs(game.Workspace[game.Players.LocalPlayer.Name]:GetChildren()) do
-                                if v:IsA("BasePart") then
-                                    v.CanCollide = false
-                                end
-                            end
-                        end
-                    end
-			    else
-				    Stepped:Disconnect()
-			    end
-		    end)
-	    else
-		    Noclip = false
-	    end
-	end
-})
-
-Tab:AddButton({
-	Name = "透视",
-	Callback = function()
-loadstring(game:GetObjects("rbxassetid://10092697033")[1].Source)()
-	end 
-})
-
-Tab:AddButton({
-	Name = "转起来",
-	Callback = function()
-      	loadstring(game:HttpGet('https://pastebin.com/raw/r97d7dS0', true))()
-  	end
-})
-
-local Tab = Window:MakeTab({
-	Name= "游戏脚本",
-	Icon = "rbxassetid://4483345998",
-	PremiumOnly = false
-})
-
-Tab:AddButton({
-	Name = "极速传奇ovo提供",
-	Callback = function()
-      	loadstring(game:HttpGet('\104\116\116\112\115\58\47\47\114\97\119\46\103\105\116\104\117\98\117\115\101\114\99\111\110\116\101\110\116\46\99\111\109\47\98\111\121\115\99\112\47\98\101\116\97\47\109\97\105\110\47\37\69\57\37\56\48\37\57\70\37\69\53\37\66\65\37\65\54\37\69\55\37\56\50\37\66\56\37\69\56\37\66\53\37\66\55\46\108\117\97'))()
-  	end
-})
-
-Tab:AddButton({
-	Name = "脚本中心妠西妲提供",
-	Callback = function()
-  loadstring(game:HttpGet("https://pastebin.com/raw/De4aYHDY"))()
-  	end
-})
-
-Tab:AddButton({
-	Name = "龙脚本",
-	Callback = function()
-  loadstring("\108\111\97\100\115\116\114\105\110\103\40\103\97\109\101\58\72\116\116\112\71\101\116\40\34\104\116\116\112\115\58\47\47\114\97\119\46\103\105\116\104\117\98\117\115\101\114\99\111\110\116\101\110\116\46\99\111\109\47\108\121\121\97\105\110\105\47\108\111\110\47\109\97\105\110\47\108\105\115\119\109\34\41\41\40\41")()
-  	end
-})
-
-Tab:AddButton({
-	Name = "USA卡密:USA AER",
-	Callback = function()
-  getgenv().USA="作者莫羽免费请勿倒卖"loadstring(game:HttpGet("https://raw.githubusercontent.com/boyscp/beta/main/USA.lua"))()
-  	end
-})
-
-Tab:AddButton({
-	Name = "自制脚本",
-	Callback = function()
-  getgenv().yczgqffg="自制脚本" loadstring(game:HttpGet(utf8.char((function() return table.unpack({104,116,116,112,115,58,47,47,112,97,115,116,101,98,105,110,46,99,111,109,47,114,97,119,47,122,110,67,121,54,89,77,81})end)())))()
-  	end
-})
-
-Tab:AddButton({
-	Name = "eom脚本",
-	Callback = function()
-  getgenv().eom = "eom"
-loadstring("\108\111\97\100\115\116\114\105\110\103\40\103\97\109\101\58\72\116\116\112\71\101\116\40\39\104\116\116\112\115\58\47\47\112\97\115\116\101\98\105\110\46\99\111\109\47\114\97\119\47\68\122\120\115\81\82\68\85\39\41\41\40\41")()
-  	end
-})
-
-Tab:AddButton({
-	Name = "河流脚本",
-	Callback = function()
-  loadstring(game:HttpGet("\104\116\116\112\115\58\47\47\112\97\115\116\101\98\105\110\46\99\111\109\47\114\97\119\47\77\50\57\77\117\81\115\80"))()
-  	end
-})
-
-Tab:AddButton({
-	Name = "BS脚本卡密:195154ajd",
-	Callback = function()
-  loadstring(game:HttpGet(utf8.char((function() return table.unpack({104,116,116,112,115,58,47,47,112,97,115,116,101,98,105,110,46,99,111,109,47,114,97,119,47,71,57,103,117,122,88,100,75})end)())))()--BS
-  	end
-})
-
-Tab:AddButton({
-	Name = "XC脚本卡密:w",
-	Callback = function()
-  
-    getgenv().XC="作者XC"
-  loadstring(game:HttpGet("https://pastebin.com/raw/PAFzYx0F"))()--XC
-    end
-})
-
-local Tab = Window:MakeTab({
-	Name = "DOORS",
-	Icon = "rbxassetid://4483345998",
-	PremiumOnly = false
-})
-
-Tab:AddButton({
-	Name = "神光脚本",
-	Callback = function()
-
-  _G["神光脚本作者TA"]="xdjhadgdsrfcyefjhsadcctyseyr6432478rudghfvszhxcaheey"loadstring(game:HttpGet(utf8.char((function() return table.unpack({104,116,116,112,115,58,47,47,112,97,115,116,101,98,105,110,46,99,111,109,47,114,97,119,47,109,119,48,112,102,69,70,77})end)())))()--神光
-    end
-})
-
-Tab:AddButton({
-	Name = "面包脚本",
-	Callback = function()
-
-  _G["面包脚本作者TA"]="xdjhadgdsrfcyefjhsadcctyseyr6432478rudghfvszhxcaheey"loadstring(game:HttpGet(utf8.char((function() return table.unpack({104,116,116,112,115,58,47,47,112,97,115,116,101,98,105,110,46,99,111,109,47,114,97,119,47,109,119,48,112,102,69,70,77})end)())))()--神光
-    end
-})
-Tab:AddButton({
-	Name = "不知道叫啥",
-	Callback = function()
-
-  loadstring(game:HttpGet("https://raw.githubusercontent.com/rxn-xyz/Ohio./main/Ohio.lua",true))()
-    end
-})
-
-Tab:AddButton({
-	Name = "不知道叫什么",
-	Callback = function()
-
-  loadstring(game:HttpGet("https://raw.githubusercontent.com/XiaoYunCN/UWU/main/hsjakajaaa.lua"))()
-    end
-})
-
-Tab:AddButton({
-	Name = "吸铁石",
-	Callback = function()
-   
-  loadstring(game:HttpGet("https://raw.githubusercontent.com/MrNeRD0/Doors-Hack/main/MagnetByNerd.lua"))()
-    end
-})
-Tab:AddButton({
-	Name = "剪刀",
-	Callback = function()
-   
-  loadstring(game:HttpGet("https://raw.githubusercontent.com/MrNeRD0/Doors-Hack/main/shears_done.lua"))()
-    end
-})    
-Tab:AddButton({
-	Name = "激光枪",
-	Callback = function()
-   
-  loadstring(game:HttpGet("https://raw.githubusercontent.com/K0t1n/Public/main/Laser%20Gun"))()
-    end
-})
-Tab:AddButton({
-	Name = "夜视仪",
-	Callback = function()
-   
-  _G.OnShop = trueloadstring(game:HttpGet('https://raw.githubusercontent.com/DeividComSono/Scripts/main/Scanner.lua'))()
-    end
-})    
-
-Tab:AddButton({
-	Name = "最强",
-	Callback = function()
-   
-  loadstring(game:HttpGet('https://pastebin.com/raw/R8QMbhzv'))()
-  	end    
-})
-
-Tab:AddButton({
-	Name = "十字架",
-	Callback = function()
-   
-  loadstring(game:HttpGet('https://pastebin.com/raw/ibbWwU6q'))()
-  	end
-})
-Tab:AddButton({
-	Name = "能量罐（清岩提供）",
-	Callback = function()
-   
-  loadstring(game:HttpGet("https://raw.githubusercontent.com/cbhlyy/lyycbh/main/nengliangtiao"))()
-    end
-})   
-
-Tab:AddButton({
-	Name = "紫色手电筒（在电梯购买东西的时候使用）",
-	Callback = function()
-   
-  loadstring(game:HttpGet("https://raw.githubusercontent.com/K0t1n/Public/main/Purple%20Flashlight"))()
-    end
-})  
-
-local Tab = Window:MakeTab({
-	Name = "脚本",
-	Icon = "rbxassetid://4483345998",
-	PremiumOnly = false
-})
-
-Tab:AddButton({
-	Name = "青蛙",
-	Callback = function()
-   
-getgenv().eom = "青蛙"
-loadstring("\108\111\97\100\115\116\114\105\110\103\40\103\97\109\101\58\72\116\116\112\71\101\116\40\39\104\116\116\112\115\58\47\47\112\97\115\116\101\98\105\110\46\99\111\109\47\114\97\119\47\68\122\120\115\81\82\68\85\39\41\41\40\41")()
-    end
-})
-Tab:AddButton({
-	Name = "地岩",
-	Callback = function()
-loadstring("\108\111\97\100\115\116\114\105\110\103\40\103\97\109\101\58\72\116\116\112\71\101\116\40\34\104\116\116\112\115\58\47\47\114\97\119\46\103\105\116\104\117\98\117\115\101\114\99\111\110\116\101\110\116\46\99\111\109\47\98\98\97\109\120\98\98\97\109\120\98\98\97\109\120\47\99\111\100\101\115\112\97\99\101\115\45\98\108\97\110\107\47\109\97\105\110\47\37\69\55\37\57\57\37\66\68\34\41\41\40\41")()
-    end
-})
-Tab:AddButton({
-	Name = "ato",
-	Callback = function()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/atoyayaya/jiaoben/main/jiamilist"))()
-end
-})
-Tab:AddButton({
-	Name = "龙",
-	Callback = function()
-loadstring(game:HttpGet "https://pastebin.com/raw/bXApbsu8")()
-    end
-})
-Tab:AddButton({
-	Name = "云脚本",
-	Callback = function()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/XiaoYunCN/UWU/main/Xiaos______________________________________________________________Yun__________________________________________________________________________betaV2.3------------------------------------------------------------------------------------jsjalololololololololololololololololololllololol.lua"))()
-    end
-})
-Tab:AddButton({
-  Name = "USA（卡密：USA AER）",
-  Callback = function()
-    getgenv().USA="作者莫羽免费请勿倒卖"loadstring(game:HttpGet("https://raw.githubusercontent.com/boyscp/beta/main/USA.lua"))()
-   end
-})local Tab = Window:MakeTab({
-	Name = "游戏脚本",
-	Icon = "rbxassetid://4483345998",
-	PremiumOnly = false
-})
-Tab:AddButton({
-	Name = "自动刷金条(造船寻宝)",	
-Callback = function()	loadstring(game:HttpGet("https://pastebin.com/raw/Lyy77rnr",true))()
-  	end
-})
-Tab:AddButton({
-	Name = "巴掌模拟器",
-	Callback = function()
-loadstring(game:HttpGet(('https://raw.githubusercontent.com/Unknownkellymc1/Unknownscripts/main/slap-battles')))()
-    end
-})
-Tab:AddDropdown({
-	Name = "选择你的免费船(鲨鱼)",
-	Default = "1",
-	Options = {"无", "DuckyBoatBeta", "DuckyBoat", "BlueCanopyMotorboat", "BlueWoodenMotorboat", "UnicornBoat", "Jetski", "RedMarlin", "Sloop", "TugBoat", "SmallDinghyMotorboat", "JetskiDonut", "Marlin", "TubeBoat", "FishingBoat", "VikingShip", "SmallWoodenSailboat", "RedCanopyMotorboat", "Catamaran", "CombatBoat", "TourBoat", "Duckmarine", "PartyBoat", "MilitarySubmarine", "GingerbreadSteamBoat", "Sleigh2022", "Snowmobile", "CruiseShip"},
-	Callback = function(Value)
-local ohString1 = (Value)
-game:GetService("ReplicatedStorage").EventsFolder.BoatSelection.UpdateHostBoat:FireServer(ohString1)
-	end 
-})
-Tab:AddButton({
-	Name = "自动杀鲨鱼🦈(鲨鱼)",
-	Callback = function()
-     loadstring(game:HttpGet("https://raw.githubusercontent.com/Sw1ndlerScripts/RobloxScripts/main/Misc%20Scripts/sharkbite2.lua",true))()
-  	end    
-})
-Tab:AddButton({
-	Name = "动画星期五",
-	Callback = function()
-     loadstring(game:HttpGet("https://raw.githubusercontent.com/wally-rblx/funky-friday-autoplay/main/main.lua",true))()
-  	end    
-})
-Tab:AddButton({
-	Name = "宠物模拟器X",
-	Callback = function()
-     loadstring(game:HttpGet'https://raw.githubusercontent.com/RunDTM/ZeeroxHub/main/Loader.lua')()
-  	end    
-})
-Tab:AddButton({
-	Name = "蜂群模拟器",
-	Callback = function()
-     loadstring(game:HttpGet("https://pastebin.com/raw/3A61hnGA", true))()
-  	end    
-})
-Tab:AddButton({
-	Name = "Evade",
-	Callback = function()
-     loadstring(game:HttpGet("https://raw.githubusercontent.com/Babyhamsta/RBLX_Scripts/main/Evade/main.lua"))()
-  	end    
-})
-Tab:AddButton({
-	Name = "后室",
-	Callback = function()
-     loadstring(game:HttpGet('https://pastebin.com/raw/Gsqd40fL'))()
-  	end    
-})
-Tab:AddButton({
-	Name = "Synapse X",
-	Callback = function()
-     loadstring(game:HttpGet("https://pastebin.com/raw/tWGxhNq0"))()
-  	end    
-})
-Tab:AddButton({
-	Name = "彩虹朋友",
-	Callback = function()
-     loadstring(game:HttpGet("https://raw.githubusercontent.com/JNHHGaming/Rainbow-Friends/main/Rainbow%20Friends"))()
-  	end    
-})
-Tab:AddButton({
-	Name = "HoHo",
-	Callback = function()
-     loadstring(game:HttpGet('https://raw.githubusercontent.com/acsu123/HOHO_H/main/Loading_UI'))()
-  	end    
-})
-Tab:AddButton({
-	Name = "tds查看兵",
-	Callback = function()
-     local Towers = game:GetService("Players").LocalPlayer.PlayerGui.Interface.Root.Inventory.View.Frame.Frame.Frame
- 
-for _, v in pairs(Towers:GetDescendants()) do
-	if v:IsA("ImageButton") then
-        v.Visible = true
-	end
-end
-  	end    
-})
-local Tab = Window:MakeTab({
-	Name = "通用",
-	Icon = "rbxassetid://4483345998",
-	PremiumOnly = false
-})
-Tab:AddButton({	
-Name = "工具包",	
-Callback = function()	loadstring(game:HttpGet("https://cdn.wearedevs.net/scripts/BTools.txt"))()	  	
-     end
-})
-Tab:AddButton({
-	Name = "透视",
-	Callback = function()
-     loadstring(game:HttpGet('https://pastebin.com/raw/MA8jhPWT'))()
-  	end    
-})
-Tab:AddButton({
-	Name = "飞车",
-	Callback = function() loadstring(game:HttpGet("https://pastebin.com/raw/MHE1cbWF"))()
-	end
-})
-Tab:AddButton({
-	Name = "甩飞",
-	Callback = function() loadstring(game:HttpGet("https://pastebin.com/raw/GnvPVBEi"))()
-	end
-})
-Tab:AddButton({
-	Name = "无限跳",
-	Callback = function()
-loadstring(game:HttpGet("https://pastebin.com/raw/V5PQy3y0", true))()
-    end
-})
-
-local Tab = Window:MakeTab({
-	Name = "FE脚本🌚",
-	Icon = "rbxassetid://4483345998",
-	PremiumOnly = false
-})
-Tab:AddButton({
-	Name = "C00lgui",
-	Callback = function()
-   loadstring(game:GetObjects("rbxassetid://8127297852")[1].Source)()
-  	end    
-})
-Tab:AddButton({
-	Name = "1x1x1x1",
-	Callback = function()
-     loadstring(game:HttpGet(('https://pastebin.com/raw/JipYNCht'),true))()
-  	end    
-})
-Tab:AddButton({
-	Name = "变玩家（R6）",
-	Callback = function()
-     loadstring(game:HttpGet("https://pastebin.com/raw/XR4sGcgJ"))()
-  	end    
-})
-Tab:AddButton({
-	Name = "动画中心",
-	Callback = function()
-     loadstring(game:HttpGet("https://raw.githubusercontent.com/GamingScripter/Animation-Hub/main/Animation%20Gui", true))()
-  	end    
-})
-local Tab = Window:MakeTab({
-	Name = "脚本作者小云",
-	Icon = "rbxassetid://4483345998",
-	PremiumOnly = false
-})
-
-Tab:AddButton({
-	Name = "脚本doors",
-	Callback = function()
-     loadstring(game:HttpGet("https://pastebin.com/raw/whXp1Ca2"))()
-  	end    
-})
-
-local Tab = Window:MakeTab({
-  Name = "DOORS娱乐十字架(只对自己召唤的怪有用)",
-  Icon = "rbxassetid://4483345998",
-  PremiumOnly = false
-})
-Tab:AddButton({
-  Name = "刷怪菜单",
-  Callback = function ()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/cbhlyy/lyycbh/main/shuaguai"))()
-  end
-})
-Tab:AddButton({
-	Name = "DOORS变身脚本",
-	Callback = function()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/ChronoAccelerator/Public-Scripts/main/Morphing/MorphScript.lua"))();
-end
-}) 
-Tab:AddButton({
-  Name = "耶稣十字架",
-  Callback = function ()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/cbhlyy/lyycbh/main/shizi2"))()
-  end
-})
-Tab:AddButton({
-  Name = "紫光十字架",
-  Callback = function ()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/cbhlyy/lyycbh/main/shizi3"))()
-  end
-})
-Tab:AddButton({
-  Name = "万圣节十字架",
-  Callback = function ()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/cbhlyy/lyycbh/main/shizi4"))()
-  end
-})
-Tab:AddButton({
-  Name = "普通十字架",
-  Callback = function ()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/cbhlyy/lyycbh/main/shizizhen"))()
-  end
-})
-
-OrionLib:Init()
-    else
-        game.Players.LocalPlayer:Kick("没卡密还想玩去S，S马玩意儿，作者QQ2120239438")
-    end
 end)
+
+equip.Name = "装备"
+equip.Parent = Main
+equip.BackgroundColor3 = Color3.fromRGB(153, 1, 1)
+equip.Position = UDim2.new(0.0608827993, 0, 0.595135629, 0)
+equip.Size = UDim2.new(0, 585, 0, 77)
+equip.Font = Enum.Font.SourceSans
+equip.Text = "装备"
+equip.TextColor3 = Color3.fromRGB(0, 0, 0)
+equip.TextScaled = true
+equip.TextSize = 14.000
+equip.TextWrapped = true
+equip.Visible = true
+equip.MouseButton1Click:connect(function()
+unequip.Visible = true
+equip.Visible = false
+_G.equip = true
+while _G.equip do
+	wait()
+for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+	if v.Name == weapon.Text then
+		v.Parent = game.Players.LocalPlayer.Character
+	end
+	end
+	end
+end)
+
+DiaPop.Name = "迪亚波普"
+DiaPop.Parent = Main
+DiaPop.BackgroundColor3 = Color3.fromRGB(153, 1, 1)
+DiaPop.Position = UDim2.new(0.055, 0, 0.794, 0) 
+DiaPop.Size = UDim2.new(0, 589, 0, 77)
+DiaPop.Font = Enum.Font.SourceSans
+DiaPop.Text = "禁用弹出窗口"
+DiaPop.TextColor3 = Color3.fromRGB(0, 0, 0)
+DiaPop.TextScaled = true
+DiaPop.TextSize = 14.000
+DiaPop.TextWrapped = true
+DiaPop.MouseButton1Click:connect(function()
+	game:GetService("Players").LocalPlayer.PlayerGui.HUD.Frame.MuscleGain:Destroy()
+end)
+
+yes.Name = "好的"
+yes.Parent = Main
+yes.BackgroundColor3 = Color3.fromRGB(63, 0, 0)
+yes.Position = UDim2.new(-0.00077368319, 0, -0.00165016949, 0)
+yes.Size = UDim2.new(0, 657, 0, 71)
+yes.Font = Enum.Font.SourceSans
+yes.Text = "汉化作者ato"
+yes.TextColor3 = Color3.fromRGB(255, 255, 255)
+yes.TextScaled = true
+yes.TextSize = 15.000
+yes.TextWrapped = true
+
+Open.Name = "打开"
+Open.Parent = ScreenGui
+Open.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Open.ClipsDescendants = true
+Open.Position = UDim2.new(0.900332212, 0, 0.490122855, 0)
+Open.Size = UDim2.new(0, 90, 0, 40)
+Open.Font = Enum.Font.SourceSans
+Open.Text = "打开"
+Open.TextColor3 = Color3.fromRGB(255, 255, 255)
+Open.TextScaled = true
+Open.TextSize = 14.000
+Open.TextStrokeTransparency = 0.000
+Open.TextWrapped = true
+Open.MouseButton1Click:connect(function()
+	Main.Visible = true
+	Close.Visible = true
+	Open.Visible = false
+end)
+
+Close.Name = "关掉"
+Close.Parent = ScreenGui
+Close.BackgroundColor3 = Color3.fromRGB(255, 114, 114)
+Close.BorderSizePixel = 0
+Close.Position = UDim2.new(0.899959266, 0, 0.490122825, 0)
+Close.Size = UDim2.new(0, 90, 0, 38)
+Close.Font = Enum.Font.Cartoon
+Close.Text = "X"
+Close.TextColor3 = Color3.fromRGB(255, 255, 255)
+Close.TextScaled = true
+Close.TextSize = 14.000
+Close.TextStrokeTransparency = 0.000
+Close.TextWrapped = true
+Close.Visible = false
+Close.MouseButton1Click:connect(function()
+	Main.Visible = false
+	Close.Visible = false
+	Open.Visible = true
+end)
+-- Gui to Lua
+-- Version: 3.2
+
+-- Instances:
+
+local BS2 = Instance.new("ScreenGui")
+local Main = Instance.new("Frame")
+local TextLabel = Instance.new("TextLabel")
+local unequip = Instance.new("TextButton")
+local weapon = Instance.new("TextBox")
+local StopFarming = Instance.new("TextButton")
+local Farm = Instance.new("TextButton")
+local equip = Instance.new("TextButton")
+local HUD = Instance.new("TextButton")
+local Fly = Instance.new("TextButton")
+local DisPa = Instance.new("TextButton")
+local Open = Instance.new("TextButton")
+local Close = Instance.new("TextButton")
+local StopFlying = Instance.new("TextButton")
+
+--Properties:
+
+BS2.Name = "BS2"
+BS2.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+BS2.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+BS2.disabled = true
+
+Main.Name = "主要的"
+Main.Parent = BS2
+Main.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Main.Position = UDim2.new(0.201550394, 0, 0.140264019, 0)
+Main.Size = UDim2.new(0, 538, 0, 288)
+Main.Active = true
+Main.Draggable = true
+
+TextLabel.Parent = Main
+TextLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel.Size = UDim2.new(0, 538, 0, 37)
+TextLabel.Font = Enum.Font.SourceSans
+TextLabel.Text = "yes bs2 hack made by Rush#2852"
+TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.TextScaled = true
+TextLabel.TextSize = 14.000
+TextLabel.TextWrapped = true
+
+unequip.Name = "不装备"
+unequip.Parent = Main
+unequip.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+unequip.Position = UDim2.new(0.68959105, 0, 0.651790202, 0)
+unequip.Size = UDim2.new(0, 155, 0, 92)
+unequip.Font = Enum.Font.SourceSans
+unequip.Text = "取消装备"
+unequip.TextColor3 = Color3.fromRGB(0, 0, 0)
+unequip.TextScaled = true
+unequip.TextSize = 14.000
+unequip.TextWrapped = true
+unequip.MouseButton1Click:connect(function()
+	equip.Visible = true
+	unequip.Visible = false
+	_G.equip = false
+end)
+
+weapon.Name = "武器"
+weapon.Parent = Main
+weapon.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+weapon.Position = UDim2.new(0.018587362, 0, 0.163290024, 0)
+weapon.Size = UDim2.new(0, 517, 0, 52)
+weapon.Font = Enum.Font.SourceSans
+weapon.Text = "武器"
+weapon.TextColor3 = Color3.fromRGB(0, 0, 0)
+weapon.TextScaled = true
+weapon.TextSize = 14.000
+weapon.TextWrapped = true
+
+StopFarming.Name = "停止锻炼"
+StopFarming.Parent = Main
+StopFarming.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+StopFarming.Position = UDim2.new(0.0167286247, 0, 0.651790202, 0)
+StopFarming.Size = UDim2.new(0, 144, 0, 92)
+StopFarming.Font = Enum.Font.SourceSans
+StopFarming.Text = "停止锻炼"
+StopFarming.TextColor3 = Color3.fromRGB(0, 0, 0)
+StopFarming.TextScaled = true
+StopFarming.TextSize = 14.000
+StopFarming.TextWrapped = true
+StopFarming.MouseButton1Click:connect(function()
+	Farm.Visible = true
+	StopFarming.Visible = false
+	_G.farm = false
+end)
+
+Farm.Name = "锻炼"
+Farm.Parent = Main
+Farm.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Farm.Position = UDim2.new(0.0167286247, 0, 0.651790202, 0)
+Farm.Size = UDim2.new(0, 144, 0, 92)
+Farm.Font = Enum.Font.SourceSans
+Farm.Text = "锻炼"
+Farm.TextColor3 = Color3.fromRGB(0, 0, 0)
+Farm.TextScaled = true
+Farm.TextSize = 14.000
+Farm.TextWrapped = true
+Farm.MouseButton1Click:connect(function()
+	StopFarming.Visible = true
+	Farm.Visible = false
+	_G.farm = true
+	while _G.farm do
+		wait()
+		for i,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+			if v.Name == weapon.Text then v:Activate() end
+		end
+	end
+end)
+
+equip.Name = "装备"
+equip.Parent = Main
+equip.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+equip.Position = UDim2.new(0.68959105, 0, 0.651790202, 0)
+equip.Size = UDim2.new(0, 155, 0, 92)
+equip.Font = Enum.Font.SourceSans
+equip.Text = "装备"
+equip.TextColor3 = Color3.fromRGB(0, 0, 0)
+equip.TextScaled = true
+equip.TextSize = 14.000
+equip.TextWrapped = true
+equip.MouseButton1Click:connect(function()
+	unequip.Visible = true
+	equip.Visible = false
+	_G.equip = true
+	while _G.equip do
+		wait()
+		for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+			if v.Name == weapon.Text then
+				v.Parent = game.Players.LocalPlayer.Character
+			end
+		end
+	end
+end)
+
+HUD.Name = "平视显示器"
+HUD.Parent = Main
+HUD.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+HUD.Position = UDim2.new(0.0204460975, 0, 0.373439103, 0)
+HUD.Size = UDim2.new(0, 517, 0, 71)
+HUD.Font = Enum.Font.SourceSans
+HUD.Text = "删除HUD"
+HUD.TextColor3 = Color3.fromRGB(0, 0, 0)
+HUD.TextScaled = true
+HUD.TextSize = 14.000
+HUD.TextWrapped = true
+HUD.MouseButton1Click:connect(function()
+	game:GetService("Players").LocalPlayer.PlayerGui.HUD:Destroy()
+end)
+
+Fly.Name = "飞"
+Fly.Parent = Main
+Fly.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Fly.Position = UDim2.new(0.351301104, 0, 0.651790202, 0)
+Fly.Size = UDim2.new(0, 144, 0, 40)
+Fly.Font = Enum.Font.SourceSans
+Fly.Text = "飞(不能解开)"
+Fly.TextColor3 = Color3.fromRGB(0, 0, 0)
+Fly.TextScaled = true
+Fly.TextSize = 14.000
+Fly.TextWrapped = true
+Fly.MouseButton1Down:connect(function()
+	_G.FLYING = false
+	local LP = game:service('Players').LocalPlayer
+	local T = LP.Character.UpperTorso
+	local CONTROL = {F = 0, B = 0, L = 0, R = 0}
+	local lCONTROL = {F = 0, B = 0, L = 0, R = 0}
+	local SPEED = 5
+	local MOUSE = LP:GetMouse()
+
+
+	local function FLY()
+		_G.FLYING = true
+		local BG = Instance.new('BodyGyro', T)
+		local BV = Instance.new('BodyVelocity', T)
+		BG.P = 9e4
+		BG.maxTorque = Vector3.new(9e9, 9e9, 9e9)
+		BG.cframe = T.CFrame
+		BV.velocity = Vector3.new(0, 0.1, 0)
+		BV.maxForce = Vector3.new(9e9, 9e9, 9e9)
+
+
+		spawn(function()
+			repeat wait()
+				LP.Character.Humanoid.PlatformStand = true
+				if CONTROL.L + CONTROL.R ~= 0 or CONTROL.F + CONTROL.B ~= 0 then
+					SPEED = 50
+				elseif not (CONTROL.L + CONTROL.R ~= 0 or CONTROL.F + CONTROL.B ~= 0) and SPEED ~= 0 then
+					SPEED = 0
+				end
+				if (CONTROL.L + CONTROL.R) ~= 0 or (CONTROL.F + CONTROL.B) ~= 0 then
+					BV.velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (CONTROL.F + CONTROL.B)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(CONTROL.L + CONTROL.R, (CONTROL.F + CONTROL.B) * 0.2, 0).p) - game.Workspace.CurrentCamera.CoordinateFrame.p)) * SPEED
+					lCONTROL = {F = CONTROL.F, B = CONTROL.B, L = CONTROL.L, R = CONTROL.R}
+				elseif (CONTROL.L + CONTROL.R) == 0 and (CONTROL.F + CONTROL.B) == 0 and SPEED ~= 0 then
+					BV.velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (lCONTROL.F + lCONTROL.B)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(lCONTROL.L + lCONTROL.R, (lCONTROL.F + lCONTROL.B) * 0.2, 0).p) - game.Workspace.CurrentCamera.CoordinateFrame.p)) * SPEED
+				else
+					BV.velocity = Vector3.new(0, 0.1, 0)
+				end
+				BG.cframe = game.Workspace.CurrentCamera.CoordinateFrame
+			until not _G.FLYING
+			CONTROL = {F = 0, B = 0, L = 0, R = 0}
+			lCONTROL = {F = 0, B = 0, L = 0, R = 0}
+			SPEED = 0
+			BG:destroy()
+			BV:destroy()
+			LP.Character.Humanoid.PlatformStand = false
+		end)
+	end
+
+	MOUSE.KeyDown:connect(function(KEY)
+		if KEY:lower() == 'w' then
+			CONTROL.F = 1
+		elseif KEY:lower() == 's' then
+			CONTROL.B = -1
+		elseif KEY:lower() == 'a' then
+			CONTROL.L = -1 
+		elseif KEY:lower() == 'd' then 
+			CONTROL.R = 1
+		end
+	end)
+
+	MOUSE.KeyUp:connect(function(KEY)
+		if KEY:lower() == 'w' then
+			CONTROL.F = 0
+		elseif KEY:lower() == 's' then
+			CONTROL.B = 0
+		elseif KEY:lower() == 'a' then
+			CONTROL.L = 0
+		elseif KEY:lower() == 'd' then
+			CONTROL.R = 0
+		end
+	end)
+
+
+
+
+	FLY()
+end)
+
+DisPa.Name = "显示"
+DisPa.Parent = Main
+DisPa.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+DisPa.Position = UDim2.new(0.351301104, 0, 0.832345724, 0)
+DisPa.Size = UDim2.new(0, 144, 0, 40)
+DisPa.Font = Enum.Font.SourceSans
+DisPa.Text = "显示平视显示器"
+DisPa.TextColor3 = Color3.fromRGB(0, 0, 0)
+DisPa.TextScaled = true
+DisPa.TextSize = 14.000
+DisPa.TextWrapped = true
+DisPa.MouseButton1Click:connect(function()
+	game:GetService("Players").LocalPlayer.PlayerGui.HUD.Frame.MuscleGain:Destroy()
+end)
+
+Open.Name = "打开"
+Open.Parent = BS2
+Open.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Open.Position = UDim2.new(0.784053147, 0, 0.615511537, 0)
+Open.Size = UDim2.new(0, 200, 0, 50)
+Open.Font = Enum.Font.SourceSans
+Open.Text = "打开"
+Open.TextColor3 = Color3.fromRGB(0, 0, 0)
+Open.TextSize = 14.000
+Open.MouseButton1Click:connect(function()
+	Main.Visible = true
+	Close.Visible = true
+	Open.Visible = false
+end)
+
+Close.Name = "关掉"
+Close.Parent = BS2
+Close.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Close.Position = UDim2.new(0.785160601, 0, 0.615511537, 0)
+Close.Size = UDim2.new(0, 201, 0, 50)
+Close.Font = Enum.Font.SourceSans
+Close.Text = "关掉"
+Close.TextColor3 = Color3.fromRGB(0, 0, 0)
+Close.TextSize = 14.000
+Close.MouseButton1Click:connect(function()
+	Main.Visible = false
+	Close.Visible = false
+	Open.Visible = true
+end)
+
+
+
+game:GetService("StarterGui"):SetCore("SendNotification",{
+	Title = "Rush BS2 Script V1.2";
+	Text = "Thank you for using my script! :))";
+})
